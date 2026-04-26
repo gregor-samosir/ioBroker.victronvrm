@@ -20,6 +20,9 @@ on:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+permissions:
+  contents: read
+
 jobs:
   # ── Package file tests ────────────────────────────────────────────────────────
   test-package:
@@ -65,6 +68,8 @@ jobs:
 
   # ── Release (on release commit OR manual dispatch on main) ───────────────────
   release:
+    permissions:
+      contents: write
     needs: [test-package, test-unit, lint]
     runs-on: ubuntu-latest
     if: |
