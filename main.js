@@ -174,12 +174,19 @@ class VictronVrmAdapter extends utils.Adapter {
  }
 
  // Build lookup map: idDataAttribute → rawValue
+ // Per-phase current and energy must be summed across all PV inverter instances
+ // (multiple inverters report the same idDataAttribute; last-wins would drop all but one)
+ const PVINVERTER_SUM_IDS = new Set([204, 206, 208, 210, 212, 214]);
  /** @type {Record<string|number, any>} */
  const vals = {};
  for (const rec of records) {
  const id = rec.idDataAttribute;
  if (id !== undefined && rec.rawValue !== undefined && rec.rawValue !== null) {
+ if (PVINVERTER_SUM_IDS.has(id)) {
+ vals[id] = (vals[id] ?? 0) + rec.rawValue;
+ } else {
  vals[id] = rec.rawValue;
+ }
  }
  }
 
