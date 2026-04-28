@@ -25,6 +25,7 @@ const VrmApiClient = require('./lib/vrm-api');
 const {
  ALL_SENSORS,
  OVERALL_STAT_KEYS, OVERALL_PERIODS,
+ LEGACY_ENERGY_ALIAS_STATE_IDS,
  TEXT_STATES, META_STATES, CHANNELS,
  VEBUS_STATE_TEXT, SOLAR_CHARGE_STATE_TEXT,
 } = require('./lib/sensor-definitions');
@@ -41,6 +42,7 @@ class VictronVrmAdapter extends utils.Adapter {
  this._timerDiag = null;
  this._timerStats = null;
  this._diagLogged = false;
+ this._publishLegacyEnergyAliases = false;
 
  this.on('ready', this.onReady.bind(this));
  this.on('unload', this.onUnload.bind(this));
@@ -67,9 +69,13 @@ class VictronVrmAdapter extends utils.Adapter {
 
  const diagSecs = Math.max(10, parseInt(cfg.pollInterval, 10) || 30);
  const statsSecs = Math.max(60, parseInt(cfg.statsInterval, 10) || 300);
+ this._publishLegacyEnergyAliases = cfg.publishLegacyEnergyAliases === true;
 
  // Build object tree
  await this._ensureObjects();
+ if (!this._publishLegacyEnergyAliases) {
+ await this._removeLegacyEnergyAliasStates();
+ }
 
  // Load installation metadata once
  await this._loadInstallationMeta();
@@ -86,7 +92,7 @@ class VictronVrmAdapter extends utils.Adapter {
  }, 5000);
 
  // Start diagnostics timer
- this.log.info(`Diagnostics polling every ${diagSecs}s, stats every ${statsSecs}s (idSite=${this.idSite})`);
+ this.log.info(`Diagnostics polling every ${diagSecs}s, stats every ${statsSecs}s (idSite=${this.idSite}, legacyEnergyAliases=${this._publishLegacyEnergyAliases})`);
  this._timerDiag = this.setInterval(() => this._pollDiagnostics(), diagSecs * 1000);
  }
 
@@ -99,6 +105,11 @@ class VictronVrmAdapter extends utils.Adapter {
  // ── Object tree ───────────────────────────────────────────────────────────
 
  async _ensureObjects() {
+ const legacyAliasIds = new Set(LEGACY_ENERGY_ALIAS_STATE_IDS);
+ const sensorsToCreate = this._publishLegacyEnergyAliases
+ ? ALL_SENSORS
+ : ALL_SENSORS.filter(s => !legacyAliasIds.has(s.id));
+
  // All channels (intermediate objects must be created explicitly – guide rule!)
  for (const [id, def] of Object.entries(CHANNELS)) {
  await this.setObjectNotExistsAsync(id, {
@@ -109,7 +120,7 @@ class VictronVrmAdapter extends utils.Adapter {
  }
 
  // Sensor states
- for (const s of ALL_SENSORS) {
+ for (const s of sensorsToCreate) {
  await this.setObjectNotExistsAsync(s.id, {
  type: 'state',
  common: {
@@ -158,6 +169,23 @@ class VictronVrmAdapter extends utils.Adapter {
  common: { name: s.name, type: s.type, role: s.role, unit: '', read: true, write: false },
  native: {},
  });
+ }
+ }
+
+ async _removeLegacyEnergyAliasStates() {
+ for (const stateId of LEGACY_ENERGY_ALIAS_STATE_IDS) {
+ try {
+ await this.delStateAsync(stateId);
+ } catch (err) {
+ void err;
+ // Ignore if state does not exist.
+ }
+ try {
+ await this.delObjectAsync(stateId);
+ } catch (err) {
+ void err;
+ // Ignore if object does not exist.
+ }
  }
  }
 
@@ -267,7 +295,7 @@ class VictronVrmAdapter extends utils.Adapter {
 
  // Populate string-vrmId sensors (Bc, Bg, Pc, Pb, Pg, Gc, Gb) from today
  // These have string vrmIds that don't exist in /diagnostics (numeric only)
- if (period.apiKey === 'today') {
+ if (period.apiKey === 'today' && this._publishLegacyEnergyAliases) {
  const strMap = {
  'Bc': 'battery.energyToConsumersToday',
  'Bg': 'battery.energyToGridToday',

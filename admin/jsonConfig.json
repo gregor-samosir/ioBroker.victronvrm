@@ -60,6 +60,13 @@
       "max": 86400,
       "default": 300
     },
+    "publishLegacyEnergyAliases": {
+      "newLine": true,
+      "type": "checkbox",
+      "label": "Publish Legacy Energy Alias States",
+      "tooltip": "Publish Legacy Energy Alias States Tooltip",
+      "default": false
+    },
 
     "_rate_hint": {
       "newLine": true,

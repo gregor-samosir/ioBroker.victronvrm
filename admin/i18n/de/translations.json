@@ -9,6 +9,8 @@
   "Installation ID Tooltip": "Zahl aus der VRM-URL: https://vrm.victronenergy.com/installation/123456/",
   "Overall Stats Interval (seconds)": "Overall-Stats Intervall (Sekunden)",
   "Overall Stats Interval Tooltip": "Wie oft Energie-Summen (heute/Woche/Monat/Jahr) aktualisiert werden. Empfehlung: 300s.",
+  "Publish Legacy Energy Alias States": "Legacy-Energie-Alias-States veröffentlichen",
+  "Publish Legacy Energy Alias States Tooltip": "Wenn aktiv, werden heutige Energie-Summen zusätzlich in battery.*, multiplus.* und pvInverter.* gespiegelt. Deaktiviert lassen für ein sauberes, duplikatfreies Objektmodell.",
   "Polling Intervals": "Polling-Intervalle",
   "Rate Limit Info": "Rate-Limit: max. ~3 Anfragen/Sekunde. Bei Standard-Einstellungen (30s Intervall) weit unter dem Limit.",
   "Sensor Count Info": "Sensoren: Batterie (34) · MultiPlus (12) · Netz (10) · PV-Wechselrichter (17) · Tank (6) · Solar Charger (7) · System (5) · Overall Stats (20) = 111 Datenpunkte",

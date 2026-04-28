@@ -165,7 +165,8 @@
     "accessToken": "",
     "idSite": "",
     "pollInterval": 60,
-    "statsInterval": 300
+    "statsInterval": 300,
+    "publishLegacyEnergyAliases": false
   },
   "objects": [],
   "instanceObjects": [

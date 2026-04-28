@@ -18,7 +18,8 @@
 ## Changelog
 
 ### **WORK IN PROGRESS**
-- (no changes yet)
+- Feature: added `publishLegacyEnergyAliases` option (default: `false`) to disable duplicated today-energy states under `battery.*`, `multiplus.*`, `pvInverter.*`
+- Improvement: `overall.*` is now the canonical energy-flow model; legacy alias states are optional and removed on startup when disabled
 
 ### 1.4.3 (2026-04-21)
 - Docs: added GX device log interval explanation (set to 1 min for best update frequency)
@@ -84,8 +85,9 @@ iobroker add victronvrm
 |-------|-------------|
 | **Personal Access Token** | Create at: [vrm.victronenergy.com/access-tokens](https://vrm.victronenergy.com/access-tokens) |
 | **Installation ID (idSite)** | Number from VRM URL: `https://vrm.victronenergy.com/installation/`**`123456`**`/` |
-| **Diagnostics Interval** | How often the adapter polls the VRM API (default: 30s, min: 10s) |
+| **Diagnostics Interval** | How often the adapter polls the VRM API (default: 60s, min: 10s) |
 | **Overall Stats Interval** | Energy totals today/week/month/year (default: 300s) |
+| **Publish Legacy Energy Alias States** | Optional compatibility mode: also publish duplicated "today" energy totals under `battery.*`, `multiplus.*`, `pvInverter.*` (default: disabled) |
 
 ### ⚠️ Important: GX Device Log Interval
 

@@ -7,6 +7,8 @@
   "Diagnostics Interval Tooltip": "How often all sensor values are polled (Battery, MultiPlus, Grid, PV, Solar...). Min: 10s.",
   "Overall Stats Interval (seconds)": "Overall Stats Interval (seconds)",
   "Overall Stats Interval Tooltip": "How often energy totals (today/week/month/year) are updated. Recommendation: 300s.",
+  "Publish Legacy Energy Alias States": "Publish Legacy Energy Alias States",
+  "Publish Legacy Energy Alias States Tooltip": "If enabled, duplicate today energy totals are also written to battery.*, multiplus.* and pvInverter.*. Keep disabled for a clean, non-duplicated object model.",
   "Authentication": "Authentication",
   "Installation": "Installation",
   "Polling Intervals": "Polling Intervals",
