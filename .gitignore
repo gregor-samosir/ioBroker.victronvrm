@@ -2,6 +2,7 @@ node_modules/
 npm-debug.log
 .DS_Store
 *.tgz
+.npm-cache/
 .create-adapter.json
 iob_npm.done
 CLAUDE.md
