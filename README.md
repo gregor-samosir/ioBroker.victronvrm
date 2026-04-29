@@ -17,9 +17,10 @@
 
 ## Changelog
 
-### **WORK IN PROGRESS**
-- Feature: added `publishLegacyEnergyAliases` option (default: `false`) to disable duplicated today-energy states under `battery.*`, `multiplus.*`, `pvInverter.*`
-- Improvement: `overall.*` is now the canonical energy-flow model; legacy alias states are optional and removed on startup when disabled
+### 1.8.0 (2026-04-29)
+- Optimization: converted battery alarms to boolean type with `sensor.alarm` role
+- Optimization: added `native.vrmId` to all states for better traceability
+- Improvement: existing objects are automatically retrofitted with new types/roles on startup
 
 ### 1.4.3 (2026-04-21)
 - Docs: added GX device log interval explanation (set to 1 min for best update frequency)

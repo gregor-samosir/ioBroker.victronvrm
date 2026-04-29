@@ -1,9 +1,22 @@
 {
   "common": {
     "name": "victronvrm",
-    "version": "1.4.3",
+    "version": "1.8.0",
     "license": "MIT",
     "news": {
+      "1.8.0": {
+        "en": "Optimization: converted battery alarms to boolean type with sensor.alarm role; added native.vrmId to all states for better traceability; existing objects are automatically retrofitted",
+        "de": "Optimierung: Batterie-Alarme auf Typ Boolean mit Rolle sensor.alarm umgestellt; native.vrmId zu allen States für bessere Rückverfolgbarkeit hinzugefügt; bestehende Objekte werden automatisch angepasst",
+        "ru": "Оптимизация: сигналы тревоги батареи преобразованы в тип boolean с ролью sensor.alarm; добавлен native.vrmId ко всем состояниям для лучшей прослеживаемости",
+        "pt": "Otimização: alarmes de bateria convertidos para tipo boolean com função sensor.alarm; adicionado native.vrmId a todos os estados para melhor rastreabilidade",
+        "nl": "Optimalisatie: batterij-alarmen omgezet naar boolean type met sensor.alarm rol; native.vrmId toegevoegd aan alle statussen voor betere traceerbaarheid",
+        "fr": "Optimisation: alarmes de batterie converties en type boolean avec le rôle sensor.alarm; ajout de native.vrmId à tous les états pour une meilleure traçabilité",
+        "it": "Ottimizzazione: allarmi batteria convertiti in tipo boolean con ruolo sensor.alarm; aggiunto native.vrmId a tutti gli stati per una migliore tracciabilità",
+        "es": "Optimización: alarmas de batería convertidas a tipo boolean con función sensor.alarm; se ha añadido native.vrmId a todos los estados para una mejor trazabilidad",
+        "pl": "Optymalizacja: alarmy baterii przekonwertowane na typ boolean z rolą sensor.alarm; dodano native.vrmId do wszystkich stanów dla lepszej identyfikowalności",
+        "uk": "Оптимізація: сигнали тривоги акумулятора перетворено на тип boolean з роллю sensor.alarm; додано native.vrmId до всіх станів для кращої відстежуваності",
+        "zh-cn": "优化：将电池报警转换为具有 sensor.alarm 角色的布尔类型；在所有状态中添加了 native.vrmId 以提高可追溯性；现有对象会自动进行改装"
+      },
       "1.4.3": {
         "en": "Docs: added GX device log interval explanation (set to 1 min for best update frequency); changed default diagnostics polling interval from 30s to 60s",
         "de": "Doku: Erklärung zum GX-Protokollierungsintervall hinzugefügt (auf 1 min setzen für beste Aktualisierungsrate); Standard-Diagnose-Intervall von 30s auf 60s geändert",

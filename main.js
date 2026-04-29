@@ -131,7 +131,15 @@ class VictronVrmAdapter extends utils.Adapter {
  read: true,
  write: false,
  },
- native: {},
+ native: { vrmId: s.vrmId },
+ });
+ // Ensure existing objects are updated (type/role change)
+ await this.extendObjectAsync(s.id, {
+ common: {
+ type: s.type || 'number',
+ role: s.role || 'value',
+ },
+ native: { vrmId: s.vrmId },
  });
  }
 
@@ -157,7 +165,10 @@ class VictronVrmAdapter extends utils.Adapter {
  unit: stat.unit,
  read: true, write: false,
  },
- native: {},
+ native: { vrmId: stat.key },
+ });
+ await this.extendObjectAsync(id, {
+ native: { vrmId: stat.key },
  });
  }
  }
@@ -226,7 +237,12 @@ class VictronVrmAdapter extends utils.Adapter {
  } else if (sensor.vrmId !== null) {
  val = vals[sensor.vrmId] ?? null;
  }
+
  if (val !== null) {
+ // Boolean conversion for alarms (vrm values are 0=OK, 1=Warning, 2=Alarm)
+ if (sensor.type === 'boolean') {
+ val = !!val;
+ }
  await this.setStateAsync(sensor.id, { val, ack: true });
  }
  }
